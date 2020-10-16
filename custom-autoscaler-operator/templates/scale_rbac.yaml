@@ -1,0 +1,25 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: bazinga
+  name: scale-deployment
+rules:
+- apiGroups: ["", "apps", "metrics.k8s.io"] # "" indicates the core API group
+  resources: ["deployment", "deployment/scale"]
+  verbs: ["get", "watch", "list", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+# This role binding allows "jane" to read pods in the "default" namespace.
+kind: RoleBinding
+metadata:
+  name: scale-deployment
+  namespace: bazinga
+subjects:
+- kind: User
+  name: system:serviceaccount:bazinga:default 
+  namespace: bazinga
+roleRef:
+  kind: Role #this must be Role or ClusterRole
+  name: scale-deployment # this must match the name of the Role or ClusterRole you wish to bind to
+  apiGroup: rbac.authorization.k8s.io
+---

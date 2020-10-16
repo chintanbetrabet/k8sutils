@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-1
+  namespace: default
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.15.4
+        command: ["/bin/sh", "-c", "sleep 1000000"]
+        ports:
+        - containerPort: 80
+        env:
+          - { name: APP_PROCESS, value: "http" }
+          - { name: POD_IP, valueFrom: { fieldRef: { fieldPath: status.podIP } } }
+          - { name: HOST_IP, valueFrom: { fieldRef: { fieldPath: status.hostIP } } }
+          - { name: POD_NAME, valueFrom: { fieldRef: { fieldPath: metadata.name } } }
+          - { name: NAMESPACE, value: "default" }  
+          - { name: CONDUIT, value : "58.0" }

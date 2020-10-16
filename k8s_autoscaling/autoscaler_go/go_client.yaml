@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: test-rbac
+  name: go-client
+spec:
+  containers:
+  - name: go
+    image: golang:alpine
+    args:
+    - sleep
+    - "1000000"

@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: go1
+  labels:
+    name: go1
+spec:
+  terminationGracePeriodSeconds: 180
+  containers:
+  - name: go
+    image: new-svc
+    imagePullPolicy: Never
+    # lifecycle:
+    #   preStop:
+    #     exec:
+    #       command: ["/bin/sh", "-c", "curl localhost:8080/leave"]
+    env:
+      - { name: NAMESPACE, value: "default" }
+      - { name: POD_IP, valueFrom: { fieldRef: { fieldPath: status.podIP } } }
+      - { name: KUBERNETES_SERVICE_NAME, value: "go1" }
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: go1
+spec:
+  selector:
+    name: go1
+  type: ClusterIP
+  ports:
+  - name: http-test
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: centos
+  labels:
+    name: centos
+spec:
+  terminationGracePeriodSeconds: 180
+  containers:
+  - name: go
+    image: centos
+    imagePullPolicy: Always
+    command: ["/bin/bash", "-c", "sleep 10000000"]
+
+    

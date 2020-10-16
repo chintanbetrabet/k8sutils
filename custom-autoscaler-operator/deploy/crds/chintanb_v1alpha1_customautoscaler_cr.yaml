@@ -1,0 +1,18 @@
+apiVersion: chintanb.qubole.com/v1alpha1
+kind: CustomAutoscaler
+metadata:
+  name: example-customautoscaler
+spec:
+  MinReplicas: 1
+  MaxReplicas: 3
+  DefaultReplicas: 3
+  ScalingPolicy: "test"
+---
+apiVersion: chintanb.qubole.com/v1alpha1
+kind: CustomAutoscaler
+metadata:
+  name: nginx
+spec:
+  MinReplicas: 1
+  MaxReplicas: 5
+  DefaultReplicas: 3

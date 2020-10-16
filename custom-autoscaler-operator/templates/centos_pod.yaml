@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: test-rbac
+  name: centos-sleep
+spec:
+  containers:
+  - name: centos
+    image: centos
+    args:
+    - sleep
+    - "1000000"

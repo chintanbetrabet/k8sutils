@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-customautoscaler
+  labels:
+    app: example-customautoscaler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: example-customautoscaler
+  template:
+    metadata:
+      labels:
+        app: example-customautoscaler
+    spec:
+      containers:
+      - name: example-customautoscaler
+        image: nginx
